@@ -6,29 +6,18 @@
 /*   By: calleaum <calleaum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 12:10:24 by calleaum          #+#    #+#             */
-/*   Updated: 2025/04/29 12:12:50 by calleaum         ###   ########.fr       */
+/*   Updated: 2025/04/29 13:39:25 by calleaum         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-/**
- * @brief Responsible to keep the philo sleeping.
- * Log the status and sleep the thread
- * @param philo
- */
 static void	keep_sleeping(t_philo *philo)
 {
 	log_status(philo, S_SLEEPING);
 	thread_sleep(philo->table, philo->table->time_to_sleep);
 }
 
-/**
- * @brief Responsible to Eating process.
- * This will: 1) Lock forks, 2) Log this action, 3) Log eating routine.
- * 4) Update last meal, 5) Sleep until time to eat, 6)Update eat property
- * @param philo Philo property
- */
 static void	keep_eating(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->table->fork_lock[philo->fork[F_LEFT]]);
@@ -44,12 +33,6 @@ static void	keep_eating(t_philo *philo)
 	pthread_mutex_unlock(&philo->table->fork_lock[philo->fork[F_LEFT]]);
 }
 
-/**
- * @brief Handle the think function. Will check if is necessary log the action
- * and sleep the time passed in program.
- * The first execution (unpaired values) just sleep until be call to eat.
- * @param philo Philo structure
- */
 static void	keep_thinking(t_philo *philo, bool log)
 {
 	time_t	time_thinking;
@@ -60,11 +43,6 @@ static void	keep_thinking(t_philo *philo, bool log)
 	thread_sleep(philo->table, time_thinking);
 }
 
-/**
- * @brief Handle single Philo. Grab the fork and wait until die.
- * Philos are not allowed to eat with just one fork
- * @param philo
- */
 static void	*lonely_philo(t_philo *philo)
 {
 	log_status(philo, S_LEFT_FORK);
