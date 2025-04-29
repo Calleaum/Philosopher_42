@@ -6,7 +6,7 @@
 /*   By: calleaum <calleaum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 12:10:19 by calleaum          #+#    #+#             */
-/*   Updated: 2025/04/29 15:19:56 by calleaum         ###   ########.fr       */
+/*   Updated: 2025/04/29 16:42:05 by calleaum         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,5 +208,7 @@ bool	is_param_valid(t_table *table);
  * thinking. This will be changed by the range of philo will die
  */
 long	handle_thinking_time(t_philo *philo);
+
+void	*lonely_philo(t_philo *philo);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: calleaum <calleaum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 12:10:30 by calleaum          #+#    #+#             */
-/*   Updated: 2025/04/29 16:06:57 by calleaum         ###   ########.fr       */
+/*   Updated: 2025/04/29 16:31:11 by calleaum         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ static bool	kill_philo(t_philo *philo)
 	current_time = datetime_now();
 	if ((current_time - philo->last_meal) >= philo->table->time_to_die)
 	{
-		log_status(philo, S_DEAD);
-		set_dinner_end_prop(philo->table, true);
 		pthread_mutex_unlock(&philo->general_meal_lock);
+		set_dinner_end_prop(philo->table, true);
+		log_status(philo, S_DEAD);
 		return (true);
 	}
 	return (false);
@@ -34,6 +34,8 @@ static bool	dinner_finished_reached(t_table *table)
 
 	i = 0;
 	eat_enough = true;
+	if (has_dinner_finish(table))
+		return (true);
 	while (i < table->nbr_philo)
 	{
 		pthread_mutex_lock(&table->philo[i]->general_meal_lock);
@@ -65,7 +67,7 @@ void	*finish_routines_reached(void *data)
 	{
 		if (dinner_finished_reached(table) == true)
 			return (NULL);
-		usleep(1000);
+		usleep(500);
 	}
 	return (NULL);
 }
