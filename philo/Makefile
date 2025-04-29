@@ -1,35 +1,52 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: calleaum <calleaum@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/04/29 12:10:03 by calleaum          #+#    #+#              #
+#    Updated: 2025/04/29 12:24:21 by calleaum         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = philo
 
-GCC = gcc -Wall -Wextra -Werror
+CC = gcc -pthread
 
-SRC = 	src/utils/ft_calloc.c \
-		src/philo/main.c \
-		src/philo/ft_current_time.c \
-		src/philo/ft_join_args.c \
-		src/utils/ft_split.c \
-		src/utils/utils.c \
-		src/philo/ft_routine.c \
-		src/philo/ft_output.c \
-		src/philo/ft_eat.c \
-		src/philo/ft_check_dead.c \
-		src/philo/ft_parsing.c \
-		src/philo/ft_create_philosophers.c \
-		src/philo/ft_sleep.c
+CFLAGS = -g -Wall -Werror -Wextra
 
-OBJ = ${SRC:.c=.o}
+RM = rm -rf
 
-%.o: %.c philosophers.h
-	$(GCC) -c $< -o $@
+SRCS = main.c ft_ato_long.c validation.c init.c error.c time.c \
+       output.c garbage_collector.c mutex.c \
+       routine_finish.c routine_dining.c
 
-all: ${NAME}
+OBJS = $(SRCS:%.c=./obj/%.o)
 
-${NAME}: $(OBJ)
-	gcc $(OBJ) -o ${NAME}
+all: $(NAME)
+
+$(NAME): $(OBJS)
+	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	@echo "Build Successful"
+
+./obj/%.o: %.c
+	@mkdir -p ./obj
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -rf $(OBJ)
+	@echo "Cleaning objects..."
+	@$(RM) ./obj
+	@echo "Done!"
 
 fclean: clean
-	rm -rf ${NAME}
+	@echo "Cleaning binaries..."
+	@$(RM) $(NAME)
+	@echo "Done!"
 
 re: fclean all
+
+.PHONY: all re clean fclean
+
+
+
