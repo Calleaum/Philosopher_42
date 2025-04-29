@@ -6,7 +6,7 @@
 /*   By: calleaum <calleaum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 12:10:19 by calleaum          #+#    #+#             */
-/*   Updated: 2025/04/29 12:10:21 by calleaum         ###   ########.fr       */
+/*   Updated: 2025/04/29 15:19:56 by calleaum         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,11 @@
 # include <limits.h> // long_max
 # include <sys/time.h> // gettimeofday
 
-# define ERR_PARAM "Wrong arguments. Check the subject and try again.\n"
-# define ERR_THREAD	"Error: Could not create thread.\n"
-# define ERR_MALLOC	"Error: Could not allocate memory.\n"
-# define ERR_MUTEX	"Error: Could not create mutex.\n"
-# define ERR_INV_INP "Invalid input in [%li].\n"
-# define ERR_SIXTY "Invalid input. Must be greater than 60.\n"
+# define ERR_PARAM "Wrong arguments. 😟\n"
+# define ERR_THREAD	"Error: Could not create thread. 😟\n"
+# define ERR_MALLOC	"Error: Could not allocate memory. 😟\n"
+# define ERR_MUTEX	"Error: Could not create mutex. 😟\n"
+# define ERR_INV_INP "Invalid input in [%li]. 😟\n"
 
 # ifndef PRETTY
 #  define PRETTY 0

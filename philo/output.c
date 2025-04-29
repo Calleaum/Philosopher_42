@@ -6,7 +6,7 @@
 /*   By: calleaum <calleaum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 12:10:14 by calleaum          #+#    #+#             */
-/*   Updated: 2025/04/29 12:13:33 by calleaum         ###   ########.fr       */
+/*   Updated: 2025/04/29 16:05:09 by calleaum         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,24 +33,27 @@ static char	*parse_format_pretty(t_state status)
 static char	*parse_status(t_state status)
 {
 	if (status == S_EATING)
-		return ("is eating");
+		return ("is eating 🍕");
 	else if (status == S_LEFT_FORK || status == S_RIGHT_FORK)
-		return ("has taken a fork");
+		return ("has taken a fork 🍴");
 	else if (status == S_SLEEPING)
-		return ("is sleeping");
+		return ("is sleeping 🛌");
 	else if (status == S_THINKING)
-		return ("is thinking");
+		return ("is thinking 🧠");
 	else if (status == S_DEAD)
-		return ("died");
+		return ("died 💀");
 	else
 		return ("");
 }
 
 void	log_status(t_philo *philo, t_state status)
 {
-	if (has_dinner_finish(philo->table) == true)
-		return ;
 	pthread_mutex_lock(&philo->table->log_lock);
+	if (status != S_DEAD && has_dinner_finish(philo->table))
+	{
+		pthread_mutex_unlock(&philo->table->log_lock);
+		return ;
+	}
 	if (PRETTY == 1)
 	{
 		printf(parse_format_pretty(status), get_time_ms(
@@ -60,6 +63,8 @@ void	log_status(t_philo *philo, t_state status)
 	else
 		printf("%i %ld %s\n", get_time_ms(philo->table->start_dining),
 			philo->id + 1, parse_status(status));
+	if (status == S_DEAD)
+		set_dinner_end_prop(philo->table, true);
 	pthread_mutex_unlock(&philo->table->log_lock);
 }
 

@@ -6,7 +6,7 @@
 /*   By: calleaum <calleaum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 12:10:30 by calleaum          #+#    #+#             */
-/*   Updated: 2025/04/29 12:12:34 by calleaum         ###   ########.fr       */
+/*   Updated: 2025/04/29 16:06:57 by calleaum         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 static bool	kill_philo(t_philo *philo)
 {
-	if ((datetime_now() - philo->last_meal) >= philo->table->time_to_die)
+	time_t	current_time;
+
+	current_time = datetime_now();
+	if ((current_time - philo->last_meal) >= philo->table->time_to_die)
 	{
 		log_status(philo, S_DEAD);
 		set_dinner_end_prop(philo->table, true);
